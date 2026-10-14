@@ -8,15 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const API_URL = '/api/courses';
 
-    // 1. Fetch data parsing the { success, data } wrapping structure
+    // Fetch data from the API and populate the table
     async function loadCourses() {
         try {
             const response = await fetch(API_URL);
             if (!response.ok) throw new Error('Could not pull course data from database.');
             
             const result = await response.json();
-            
-            // Accessing the .data property embedded by your route controller
             if (result.success && Array.isArray(result.data)) {
                 populateTable(result.data);
             } else {
@@ -28,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // 2. Clear old nodes and construct table elements dynamically
+    // Populate the table with course data
     function populateTable(courses) {
         courseTableBody.innerHTML = '';
 
@@ -52,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    //seaches for a course by ID and populates the table with the result
     courseSearchForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -79,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 3. Intercept form submission and upload structured JSON payload
+    // uses event listener to handle form submission and send data to the API
     courseForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -105,13 +104,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             displayStatus('Course registered successfully!', 'success');
             courseForm.reset();
-            loadCourses(); // Asynchronously refresh UI view
+            loadCourses(); //refresh the table to show the new course
         } catch (error) {
             displayStatus(error.message, 'danger');
         }
     });
 
-    // Notification Panel Utility
+    // Notifications
     function displayStatus(msg, alertType) {
         statusMessage.textContent = msg;
         statusMessage.className = `p-3 mb-3 fw-bold text-center rounded`;
@@ -128,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => statusMessage.classList.add('d-none'), 4000);
     }
 
-    // HTML escape utility guarding database strings
     function sanitize(str) {
         if (!str) return '';
         return String(str)
@@ -138,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/"/g, '&quot;');
     }
 
-    // Event listeners initialization
     refreshBtn.addEventListener('click', loadCourses);
     loadCourses();
 });
