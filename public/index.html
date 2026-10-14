@@ -1,19 +1,88 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap Home Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Management System</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
 </head>
+<body class="bg-light">
 
-<body>
-    <h1>Home Page</h1>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
+    <div class="container mb-4">
+        <header class="mb-4 p-3 bg-dark text-white rounded-bottom shadow-sm">
+            <h1 class="fw-bold m-0">CSCE 41333: Course Management</h1>
+        </header>
+
+
+        <div id="statusMessage" class="p-3 mb-3 fw-bold d-none text-center rounded"></div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-dark text-white fw-bold">Add New Course</div>
+                    <div class="card-body">
+                        <form id="courseForm">
+                            <div class="mb-3">
+                                <label for="courseNo" class="form-label fw-bold">Course Number</label>
+                                <input type="text" class="form-control" id="courseNo" placeholder="e.g., CS404" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="courseDesc" class="form-label fw-bold">Course Description</label>
+                                <input type="text" class="form-control" id="courseDesc" placeholder="e.g., Web Development" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="lastSemTaught" class="form-label fw-bold">Last Semester Taught</label>
+                                <input type="text" class="form-control" id="lastSemTaught" placeholder="e.g., Fall 2026" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="maxStudents" class="form-label fw-bold">Max Students</label>
+                                <input type="number" class="form-control" id="maxStudents" min="1" placeholder="e.g., 70" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 fw-bold">Submit Course</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+             
+            <div class="col-md-8">
+                <form id="courseSearchForm" class="row g-2 align-items-end p-3">
+                    <div class="col">
+                        <label for="courseIdSearch" class="form-label fw-bold">Search by Course ID</label>
+                        <input type="number" class="form-control" id="courseIdSearch" min="1" step="1" placeholder="Enter course ID" required>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary fw-bold">Search</button>
+                    </div>
+                </form>
+
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white fw-bold d-flex justify-content-between align-items-center">
+                        <span>Active Courses</span>
+                        <button id="refreshBtn" class="btn btn-outline-light btn-sm fw-bold">Refresh View</button>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered mb-0">
+                                <thead class="bg-dark text-white">
+                                    <tr>
+                                        <th>Course No</th>
+                                        <th>Description</th>
+                                        <th>Last Taught</th>
+                                        <th class="text-end">Max Students</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="courseTableBody">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="courses.js"></script>
 </body>
-
 </html>
